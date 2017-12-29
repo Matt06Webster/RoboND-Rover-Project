@@ -77,6 +77,16 @@ def perspect_transform(img, src, dst):
     
     return warped
 
+def find_rocks(img, levels = (110,110,50)):
+	rockpix = ((img[:,:,0] > levels[0]) \
+		   & (img[:,:,1] > levels[1]) \
+		   & (img[:,:,2] < levels[2]))
+
+	color_select = np.zeros_like(img[:,:,0])
+	color_select[rockpix] = 1
+
+	return color_select
+
 
 # Apply the above functions in succession and update the Rover state accordingly
 def perception_step(Rover):
